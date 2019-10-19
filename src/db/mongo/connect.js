@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const createTokenModel = require("./models/token")
 const createUserModel = require("./models/user")
+const createPaymentModel = require("./models/payment")
 
 module.exports = async (config) => new Promise((resolve, reject) => {
     const dbUrl = `mongodb://${config.DBUSER}:${config.DBPASSWORD}@${config.DBHOST}:${config.DBPORT}/${config.DBNAME}`;
@@ -14,6 +15,7 @@ module.exports = async (config) => new Promise((resolve, reject) => {
         container.register("mongoConnection", asValue(mongoConnection));
         container.register("UserModel", asFunction(createUserModel));
         container.register("TokenModel", asFunction(createTokenModel));
+        container.register("PaymentModel", asFunction(createPaymentModel));
         // container.register("RoomModel", asFunction(createRoomModel));
 
         resolve(container.build(createAdapter));

@@ -1,13 +1,13 @@
-
 FROM node:alpine
 
 WORKDIR /app
 
 COPY package.json ./
 
-RUN npm i 
+RUN npm i --production
 
 EXPOSE 3000
-VOLUME src
+
+COPY src ./
 
 CMD ["node"]

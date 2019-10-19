@@ -1,9 +1,9 @@
 let { createContainer, asValue, asClass, asFunction } = require("awilix");
-let connectToDb = require("./src/db/memory/connect");
+let connectToDb = require("./db/memory/connect");
 let express = require("express")
-let configureApp = require("./src/configure-app");
-let config = require("./src/config");
-let defineRoutes = require("./src/routes/define-routes");
+let configureApp = require("./configure-app");
+let config = require("./config");
+let defineRoutes = require("./routes/define-routes");
 
 connectToDb().then(db => {
     let container = createContainer();

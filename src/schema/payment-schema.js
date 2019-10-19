@@ -1,7 +1,7 @@
 let joi = require("joi");
 
 let paymentSchema = joi.object().keys({
-    id: joi.string().min(3),
+    // id: joi.string().min(3),
     payeeId: joi.string().min(3),
     payerId: joi.string().min(3),
     paymentSystem: joi.string().min(3),

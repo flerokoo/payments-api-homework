@@ -59,8 +59,8 @@ module.exports = () => Promise.resolve({
             ...data,
             _id: "id123",
             status: "created",
-            created: Date.now().toString(),
-            updated: Date.now().toString()
+            created: new Date().toString(),
+            updated: new Date().toString()
         };
 
         payments.push(o)
@@ -74,11 +74,13 @@ module.exports = () => Promise.resolve({
 
     async approvePayment(username, id) {
         let payment = await this.getPayment(username, id);
+        payment.updated = new Date().toString()
         payment.status = "approved";
     },
 
     async cancelPayment(username, id) {
         let payment = await this.getPayment(username, id);
+        payment.updated = new Date().toString()
         payment.status = "cancelled";
     },
 });

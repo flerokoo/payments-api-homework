@@ -29,5 +29,7 @@ services:
       dockerfile: Dockerfile.dev
     environment: 
       PORT: 3000
+    volumes:
+      - src:/app/src
     restart: always
 
