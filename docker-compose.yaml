@@ -29,7 +29,9 @@ services:
       dockerfile: Dockerfile.dev
     environment: 
       PORT: 3000
+    ports:
+      - 3000:3000
     volumes:
-      - D:\projects\my\task-payment-api\src:/app/src
+      - ./src:/app/src
     restart: always
 

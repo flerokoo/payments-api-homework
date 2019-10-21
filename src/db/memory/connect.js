@@ -13,12 +13,12 @@ let adapter = {
     
     // TOKENS
 
-    async createToken(username) {
+    async createToken(username, duration = 1000 * 60 * 60) {
         let o = {
             username,
             token: 'token123',
             iat: new Date(),
-            eat: new Date(Date.now() + 1000 * 60 * 60)
+            eat: new Date(Date.now() + duration)
         };
 
         tokens.push(o);
@@ -40,11 +40,11 @@ let adapter = {
     // USERS
 
     async createUser(username, password) {
-        return users.push({ username, password })
+        return users.push({ username, password });
     },
 
     async getUser(u, p) {
-        return users.find(({ username, password }) => username === u && password === p)
+        return users.find(({ username, password }) => username === u && password === p);
     },
 
 
@@ -63,7 +63,7 @@ let adapter = {
             updated: new Date().toString()
         };
 
-        payments.push(o)
+        payments.push(o);
 
         return o;
     },
@@ -74,13 +74,13 @@ let adapter = {
 
     async approvePayment(username, id) {
         let payment = await this.getPayment(username, id);
-        payment.updated = new Date().toString()
+        payment.updated = new Date().toString();
         payment.status = "approved";
     },
 
     async cancelPayment(username, id) {
         let payment = await this.getPayment(username, id);
-        payment.updated = new Date().toString()
+        payment.updated = new Date().toString();
         payment.status = "cancelled";
     },
 };

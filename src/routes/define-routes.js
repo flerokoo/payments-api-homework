@@ -1,10 +1,10 @@
 let fs = require("fs");
-let path = require("path")
+let path = require("path");
 
 module.exports = (directory, routesDir = "./src/routes") => ({ router, app, db, config }) => {
     let basePath = path.join(routesDir, directory);
 
-    directory = directory.trim("/")
+    directory = directory.trim("/");
     
     fs.readdirSync(basePath)
         .map(f => path.join(basePath, f))
@@ -15,5 +15,5 @@ module.exports = (directory, routesDir = "./src/routes") => ({ router, app, db, 
         });    
     
     
-    app.use("/" + directory, router)
-}
+    app.use("/" + directory, router);
+};

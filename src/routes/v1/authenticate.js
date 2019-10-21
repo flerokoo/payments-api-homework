@@ -1,21 +1,16 @@
 let joi = require("@hapi/joi");
 let ErrorCodes = require("../../const/error-codes");
+let to = require("await-to-js").to;
 
 let inSchema = joi.object().keys({
     username: joi.string().min(3),
     password: joi.string().min(3)
-})
-
-let outSchema = joi.object().keys({
-    authToken: joi.string().length(32), // TODO something else
-    expiresIn: joi.string().min(5) // TODO regex
-})
-
+});
 
 module.exports = ({ router, db }) => {
 
     router.post("/authenticate", async (req, res) => {
-
+        let user;
         let { error, value } = inSchema.validate(req.body);
 
         if (error) {
@@ -28,21 +23,26 @@ module.exports = ({ router, db }) => {
 
         let { username, password } = value;
 
-        // TODO await to js
-        let user = await db.getUser(username, password);
+        [error, user] = await to(db.getUser(username, password));
+        
+        if (error) return res.status(500).end();
 
         if (!user) return res.json({
-            code: ErrorCodes.ERR_UNATHORIZED,
+            code: ErrorCodes.ERR_UNAUTHORIZED,
             message: "Invalid credentials given"
-        })
+        });
         
 
-        let { token, eat: expiresIn } = await db.createToken(username);
+        let result = await to(db.createToken(username));
+
+        if (result[0]) return res.status(500).end();
+        
+        let { token, eat: expiresIn } = result[1];
 
         return res.json({
             token,
             expiresIn
         });
 
-    })    
-}
+    });    
+};

@@ -1,4 +1,5 @@
 let joi = require("@hapi/joi");
+let mongoose = require("mongoose");
 
 let paymentSchema = joi.object().keys({
     // id: joi.string().min(3),
@@ -10,11 +11,14 @@ let paymentSchema = joi.object().keys({
     currency: joi.string().length(3),
     status: joi.string().min(3),
     comment: joi.optional(),
-    created: joi.string().min(3),
-    updated: joi.string().min(3),
+    created: joi.alt([joi.string().min(3), joi.date()]),
+    updated: joi.alt([joi.string().min(3), joi.date()]),
     username: joi.strip(),
-    _id: joi.allow()
-}).options({ presence: 'required' });
+    _id: joi.alt([
+        joi.string().length("5dadb5e31701dc025e44ea7f".length),
+        joi.custom(a => a instanceof mongoose.Types.ObjectId ? a : null)
+    ])
+}).options({ presence: 'required', stripUnknown: true });
 
 
 

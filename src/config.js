@@ -8,4 +8,4 @@ module.exports = {
     DBPASSWORD: process.env.DBPASSWORD || "password",
     PORT,
     JWTSECRET: process.env.JWT_SECRET || "secret"
-}
+};

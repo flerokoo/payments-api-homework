@@ -3,7 +3,7 @@ let joi = require("@hapi/joi");
 let validateToken = require("../../middlewares/validate-token");
 let ErrorCodes = require("../../const/error-codes");
 let paymentSchema = require("../../validation/payment-schema");
-
+let to = require("await-to-js").to;
 let inSchema = joi.object().keys({
     payeeId: joi.string().min(3),
     payerId: joi.string().min(3),
@@ -18,8 +18,8 @@ let outSchema = paymentSchema;
 
 module.exports = ({ router, db }) => {
     router.post("/payments", validateToken(db), async (req, res) => {
-
-        let { error, value } = inSchema.validate(req.body);
+        let error, value, payment, validatedPayment;
+        ({ error, value } = inSchema.validate(req.body));
 
         if (error) return res.status(400).json({
             code: ErrorCodes.ERR_VALIDATION,
@@ -29,16 +29,18 @@ module.exports = ({ router, db }) => {
 
         
 
-        let username = req.appdata.username;       
+        let username = req.userdata.username;       
         value.username = username;
         
-        let payment = await db.createPayment(value);
-                    
-        ({ error, value } = outSchema.validate(payment));
+        [error, payment] = await to(db.createPayment(value));
 
         if (error) return res.status(500).end();
 
-        return res.status(201).json(value);
+        ({ error, value : validatedPayment } = outSchema.validate(payment));
+
+        if (error) return res.status(500).end();
+
+        return res.status(201).json(validatedPayment);
         
         
     });

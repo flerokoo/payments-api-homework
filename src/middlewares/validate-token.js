@@ -1,6 +1,6 @@
 
 let ErrorCodes = require("../const/error-codes");
-
+let to = require("await-to-js").to;
 module.exports = db => async (req, res, next) => {
     let token = req.params.token || req.query.token;
 
@@ -9,7 +9,9 @@ module.exports = db => async (req, res, next) => {
         message: "No auth token provided"
     });
     
-    let tokenObj = await db.validateToken(token);
+    let [error, tokenObj] = await to(db.validateToken(token));
+
+    if (error) return res.status(500).end();
 
     if (!tokenObj) return res.status(401).json({
         code: ErrorCodes.ERR_AUTH_TOKEN_EXPIRED,
@@ -18,10 +20,10 @@ module.exports = db => async (req, res, next) => {
 
     let username = tokenObj.username;
 
-    req.appdata = {
-        ...(req.appdata || {}),
+    // eslint-disable-next-line require-atomic-updates
+    req.userdata = {
         username
     };
 
     next();
-}
+};
