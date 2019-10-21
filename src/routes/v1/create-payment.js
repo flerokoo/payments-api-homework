@@ -2,7 +2,7 @@
 let joi = require("joi");
 let validateToken = require("../../middlewares/validate-token");
 let ErrorCodes = require("../../const/error-codes");
-let paymentSchema = require("../../schema/payment-schema");
+let paymentSchema = require("../../validation/payment-schema");
 
 let inSchema = joi.object().keys({
     payeeId: joi.string().min(3),

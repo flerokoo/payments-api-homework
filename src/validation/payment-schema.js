@@ -14,6 +14,8 @@ let paymentSchema = joi.object().keys({
     updated: joi.string().min(3),
     username: joi.strip(),
     _id: joi.allow()
-})
+}).options({ presence: 'required' });
+
+
 
 module.exports = paymentSchema;

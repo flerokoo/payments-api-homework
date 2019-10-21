@@ -1,6 +1,6 @@
 let joi = require("joi");
 let ErrorCodes = require("../../const/error-codes");
-let paymentSchema = require("../../schema/payment-schema");
+let paymentSchema = require("../../validation/payment-schema");
 let validateToken = require("../../middlewares/validate-token");
 
 let outSchema = paymentSchema

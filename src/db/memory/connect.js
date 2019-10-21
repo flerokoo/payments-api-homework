@@ -1,4 +1,5 @@
-let ErrorCodes = require("../../const/error-codes")
+let interface = require("../../validation/db-adapter-interface");
+let joi = require("joi")
 
 let users = [{
     username: "Bob",
@@ -9,7 +10,7 @@ let payments = [];
 
 let tokens = [];
 
-module.exports = () => Promise.resolve({
+let adapter = {
     
     // TOKENS
 
@@ -44,7 +45,7 @@ module.exports = () => Promise.resolve({
     },
 
     async getUser(u, p) {
-        return users.find(({username, password}) => username === u && password === p)
+        return users.find(({ username, password }) => username === u && password === p)
     },
 
 
@@ -68,7 +69,7 @@ module.exports = () => Promise.resolve({
         return o;
     },
 
-    async getPayment(username, id) {        
+    async getPayment(username, id) {
         return payments.find(p => p._id === id && username === p.username);
     },
 
@@ -83,4 +84,12 @@ module.exports = () => Promise.resolve({
         payment.updated = new Date().toString()
         payment.status = "cancelled";
     },
-});
+};
+
+let { error, value: validatedAdapter } = joi.validate(adapter, interface);
+
+if (error) {
+    throw new Error(JSON.stringify(error));
+}
+
+module.exports = () => Promise.resolve(validatedAdapter);

@@ -18,7 +18,7 @@ module.exports = ({ router, db }) => {
         if (payment.status !== "created") return res.status(400).json({
             code: ErrorCodes.ERR_CANNOT_CANCEL,
             message: payment.status === "approved"
-                ? "Cannot approve a payment that has already been approved"
+                ? "Cannot cancel a payment that has already been approved"
                 : "Payment is already cancelled"
         })
                     
