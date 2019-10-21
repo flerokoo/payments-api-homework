@@ -30,6 +30,6 @@ services:
     environment: 
       PORT: 3000
     volumes:
-      - src:/app/src
+      - D:\projects\my\task-payment-api\src:/app/src
     restart: always
 

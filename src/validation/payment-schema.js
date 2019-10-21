@@ -1,4 +1,4 @@
-let joi = require("joi");
+let joi = require("@hapi/joi");
 
 let paymentSchema = joi.object().keys({
     // id: joi.string().min(3),

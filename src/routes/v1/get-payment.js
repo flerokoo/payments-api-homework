@@ -1,4 +1,4 @@
-let joi = require("joi");
+let joi = require("@hapi/joi");
 let ErrorCodes = require("../../const/error-codes");
 let paymentSchema = require("../../validation/payment-schema");
 let validateToken = require("../../middlewares/validate-token");
@@ -18,7 +18,7 @@ module.exports = ({ router, db }) => {
             message: "No such payment"
         })
                     
-        let { error, value: validatedPayment } = joi.validate(payment, outSchema);
+        let { error, value: validatedPayment } = outSchema.validate(payment);
 
         if (error) return res.status(500).end();
 

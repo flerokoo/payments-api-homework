@@ -1,5 +1,4 @@
 let interface = require("../../validation/db-adapter-interface");
-let joi = require("joi")
 
 let users = [{
     username: "Bob",
@@ -86,7 +85,7 @@ let adapter = {
     },
 };
 
-let { error, value: validatedAdapter } = joi.validate(adapter, interface);
+let { error, value: validatedAdapter } = interface.validate(adapter);
 
 if (error) {
     throw new Error(JSON.stringify(error));

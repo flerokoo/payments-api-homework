@@ -1,4 +1,4 @@
-let joi = require("joi");
+let joi = require("@hapi/joi");
 let ErrorCodes = require("../../const/error-codes");
 
 let inSchema = joi.object().keys({
@@ -16,7 +16,7 @@ module.exports = ({ router, db }) => {
 
     router.post("/authenticate", async (req, res) => {
 
-        let { error, value } = joi.validate(req.body, inSchema);
+        let { error, value } = inSchema.validate(req.body);
 
         if (error) {
             return res.status(400).json({

@@ -10,4 +10,4 @@ EXPOSE 3000
 
 COPY src ./
 
-CMD ["node"]
+CMD ["node", "."]

@@ -4,7 +4,7 @@ let express = require("express")
 let configureApp = require("./configure-app");
 let config = require("./config");
 let defineRoutes = require("./routes/define-routes");
-
+console.log("PRIVET")
 connectToDb().then(db => {
     let container = createContainer();
 

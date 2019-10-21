@@ -1,4 +1,4 @@
-let joi = require("joi");
+let joi = require("@hapi/joi");
 let ErrorCodes = require("../../const/error-codes");
 let paymentSchema = require("../../validation/payment-schema");
 let validateToken = require("../../middlewares/validate-token");
@@ -10,7 +10,7 @@ module.exports = ({ router, db }) => {
         let username = req.appdata.username;
         let payments = await db.getPayments(username);
         
-        let { error, value: validatedPayments } = joi.validate(payments, outSchema);
+        let { error, value: validatedPayments } = outSchema.validate(payments);
 
         if (error) return res.status(500).end();
 

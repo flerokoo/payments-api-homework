@@ -1,4 +1,4 @@
-let joi = require("joi");
+let joi = require("@hapi/joi");
 
 module.exports = joi.object().keys({
     createToken: joi.func().arity(1),

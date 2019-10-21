@@ -8,6 +8,6 @@ COPY package.json ./
 RUN npm i 
 
 EXPOSE 3000
-VOLUME src
+VOLUME /app/src
 
-CMD ["node"]
+CMD ["/app/node_modules/.bin/nodemon"]

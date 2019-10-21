@@ -1,5 +1,5 @@
 
-let joi = require("joi");
+let joi = require("@hapi/joi");
 let validateToken = require("../../middlewares/validate-token");
 let ErrorCodes = require("../../const/error-codes");
 let paymentSchema = require("../../validation/payment-schema");
@@ -34,7 +34,7 @@ module.exports = ({ router, db }) => {
         
         let payment = await db.createPayment(value);
                     
-        ({ error, value } = joi.validate(payment, outSchema));
+        ({ error, value } = outSchema.validate(payment));
 
         if (error) return res.status(500).end();
 
